@@ -21,6 +21,19 @@ public class GoogleSearchPage {
     public void launchApplication() {
         // Setup Firefox driver using WebDriverManager
         WebDriverManager.firefoxdriver().setup();
+
+	// Configure Firefox options with headless mode for Jenkins
+    FirefoxOptions options = new FirefoxOptions();
+    
+    // Check if running in Jenkins environment (common environment variable)
+    boolean isJenkins = System.getenv("JENKINS_HOME") != null || 
+                        System.getenv("JENKINS_URL") != null;
+    
+    if (isJenkins) {
+        // Headless mode for Jenkins
+        options.addArguments("--headless");
+        System.out.println("Running in Jenkins headless mode");
+    }
         
         // Initialize Firefox driver with options
         driver = new FirefoxDriver();
